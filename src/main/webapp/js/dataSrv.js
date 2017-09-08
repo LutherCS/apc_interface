@@ -299,8 +299,8 @@ app.factory("dataSrv", ["$http", "$log", "$rootScope", "$filter", "DATA_URL", "E
                var index = 0;
                while (index < allProposals.elements.length && proposal == null) {
                        var checkProposal = allProposals.elements[index];
-                       if ( checkProposal && ( (checkProposal.oldCourse && checkProposal.oldCourse.name == course.name) || 
-                               (checkProposal.newCourse && checkProposal.newCourse.name == course.name) ) ) {
+                       if ( checkProposal && ( (checkProposal.oldCourse && checkProposal.oldCourse.name == course.name && checkProposal.oldCourse.title == course.title) || 
+                               (checkProposal.newCourse && checkProposal.newCourse.name == course.name && checkProposal.newCourse.title == course.title) ) ) {
                                proposal = checkProposal;
                        }
                        index++;
