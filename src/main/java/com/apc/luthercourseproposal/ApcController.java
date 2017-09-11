@@ -163,12 +163,15 @@ public class ApcController extends HttpServlet {
                 case "getUser" :
                     try {
                         Principal up = request.getUserPrincipal();
-                        ApcUser user = new ApcUser(ldap_url, ldap_pass, ldap_user);
-                        String name = user.getUserName(up.getName());
+                        String name;
+                        if (ldap_url != null) {
+                            ApcUser user = new ApcUser(ldap_url, ldap_pass, ldap_user);
+                            name = user.getUserName(up.getName());
+                        } else {
+                            name = up.getName();
+                        }                        
                         String email = up.getName();
-                        if (name == null) {
-                            name = email;
-                        }
+                        
                         resp = this.dao.getUser(email, name, roles);
                         status = STATUS_OK;
                     } catch (Exception ex) {
