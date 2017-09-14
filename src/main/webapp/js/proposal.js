@@ -19,7 +19,7 @@ function proposalCtrl($rootScope, $scope, $log, $location, $routeParams, $filter
 	$scope.prevPage = params.prevPage;
 
 	$scope.chosenGenEd = null;
-	$scope.gen_eds = ["BL", "SKL", "WEL", "REL", "NWL", "NWNL", "HB", "HBSSM", "HE", "HEPT", "INTCL", "HIST", "QUANT"];
+	$scope.gen_eds = ["BL", "SKL", "WEL", "REL", "NWL", "NWNL", "HB", "HBSSM", "HE", "HEPT", "INTCL", "HIST", "QUANT", "WRITING", "J2"];
 
 	initProposal();
 
