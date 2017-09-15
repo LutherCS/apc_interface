@@ -59,6 +59,7 @@ public class ApcUser {
                 displayName = attrs.get("displayName").toString().split(":")[1].trim();
             }
         } catch (Exception ex) {
+            System.err.println(ex.getMessage());
         }
         return displayName;
     }
