@@ -7,6 +7,7 @@
                 <br>
                 <span class="courseTitle"><strong>{{course.newCourse.title}} </strong> </span>
                 <small ng-if="course.oldCourse == null" style="color: green;">[New Course]</small>
+                <small ng-if="course.oldCourse != null" style="color: green;">[Modified Course]</small>                
                 <small ng-if="course.oldCourse && course.oldCourse.title != course.newCourse.title" class="old-course"><br>{{course.oldCourse.title}}</small>
             </a>
         </div>

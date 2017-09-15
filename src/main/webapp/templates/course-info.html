@@ -12,6 +12,9 @@
                 <div class="inlineBlock" ng-if="!course.oldCourse">
                     <strong style="color:green;">[New Course]</strong>
                 </div>
+                <div class="inlineBlock" ng-if="course.oldCourse != null">
+                    <strong style="color:green;">[Modified Course]</strong>
+                </div>
             </div>
             <div class="col-xs-4 text-center" ng-hide="isArchive">
                 <div class="panel-heading" style="margin-bottom: 0;"><strong>Approval Status</strong></div>
