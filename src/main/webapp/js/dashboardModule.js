@@ -116,6 +116,12 @@ app.controller("courseListCtrl", ["$scope", "$rootScope", "$log", "$filter", "fi
 	}
 }]);
 
+app.filter('qescape', function() {
+  return function(input) {
+      return window.escape(input);
+      }
+  });
+
 /**
  * This function implements a filter on both the old and new course in a proposal given a field
  * in the course and a value to match. 
