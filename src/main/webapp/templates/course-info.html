@@ -22,7 +22,7 @@
             <div class="col-xs-4">
                 <div ng-if="!hideButtons" style="margin-right:10px;">
                     <btn-menu></btn-menu>
-                    <a class="approveReject" ng-if="course.owner == user.name" ng-href="#/{{course.newCourse.name}}/edit"><div class="btn btn-primary pull-right"><span class="glyphicon glyphicon-pencil"></span> Edit</div></a>
+                    <a class="approveReject" ng-if="course.owner == user.name" ng-href="#/{{course.newCourse.name}}/{{course.newCourse.title|qescape}}/edit"><div class="btn btn-primary pull-right"><span class="glyphicon glyphicon-pencil"></span> Edit</div></a>
                 </div>
             </div>
             <!-- this div duplicated bit lower in code, but hidden in different circumstances, depending if it's archive or course/proposal view -->
@@ -201,7 +201,7 @@
                 </div>
                 <div class="row">
                    <button type="button" title="View Archive"  class="btn btn-default pull-right" ng-click="getArchiveById(course._id.$oid)">See Archive</button>
-                   <a ng-href="#/{{course.name}}/{{course.title}}/edit"><div class="btn btn-primary pull-right" style="margin-right:10px;"><span class="glyphicon glyphicon-pencil"></span> Edit</div></a>
+                   <a ng-href="#/{{course.name}}/{{course.title|qescape}}/edit"><div class="btn btn-primary pull-right" style="margin-right:10px;"><span class="glyphicon glyphicon-pencil"></span> Edit</div></a>
                 </div>
             </div>
         </h5>
