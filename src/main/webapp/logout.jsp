@@ -13,7 +13,7 @@
     </head>
     <body><%
             session.invalidate();
-            response.sendRedirect("login.html");
+            response.sendRedirect("/");
           %>
     </body>
 </html>

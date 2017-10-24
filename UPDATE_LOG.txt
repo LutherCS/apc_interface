@@ -1,0 +1,14 @@
+UPDATE LOG
+==========
+
+[Bug] After logging out, logging in again triggers a j_security_check that prohibits the user from successfully navigating to the dashboard.
+
+10.20.2017: Revised logout.jsp. Changed 
+    response.sendRedirect("login.html");     to     response.sendRedirect("/");
+This reroutes the application to the homepage instead of the login template, allowing the application to correctly route the user to the dashboard instead of a non-existent page.
+
+[Bug] When logging in, a 404 error is sometimes thrown on "favicon.ico".
+
+10.20.2017: I copied the application's .png format icon and converted it to a 16x16 .ico file. I dropped this in the root directory of the application, src/main/webapp/. It seems that the application is searching for this file even though we've already pointed it to its .png icon, so it was expected that this would fix the issue. Now, however, while a 404 error is not thrown, the entire application redirects to localhost:8080/favicon.ico (in the development environment).
+
+10.24.2017: A restart of the virtual machine appears to have fixed the issue. I can no longer replcate it. The favicon.ico remains in the site's root directory, as it appears to have fixed the issue, even though it never seems to get used.
