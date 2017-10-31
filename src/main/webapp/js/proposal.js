@@ -75,8 +75,8 @@ function proposalCtrl($rootScope, $scope, $log, $location, $routeParams, $filter
 												    "desc": course.desc,
 
 									};
-				if (course.gen_ed) {
-				 	$scope.proposal.newCourse["gen_ed"] = course.gen_ed.slice();
+				if (course.gen_eds) {
+				 	$scope.proposal.newCourse["gen_ed"] = course.gen_eds.split(",");
 				} else {
 					$scope.proposal.newCourse["gen_ed"] = [];
 				}
