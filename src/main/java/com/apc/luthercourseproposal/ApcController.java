@@ -133,7 +133,6 @@ public class ApcController extends HttpServlet {
        this.dao = new ApcDao(); 
     }
     
-    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException {
         try{
@@ -259,6 +258,13 @@ public class ApcController extends HttpServlet {
                     resp = Json.createObjectBuilder().add("status", "Invalid Query").build().toString();
                     break;
             }
+            ///////////////////////////////////////////////////////////////////////////////////////
+            // ISSUE 2: The following three lines should prevent the app from caching in browsers,
+            // eliminating the cahcing issue by preventing it from having the chance to occur.
+            // response.addDateHeader("Expires", 0);
+            // response.addHeader("Pragma", "no-cache");
+            // response.addHeader("Cache-control", "no-cache,no-store-must-revalidate");
+            ///////////////////////////////////////////////////////////////////////////////////////
             response.setStatus(status);
             response.getWriter().print(resp);
         } catch (IOException ex) {
@@ -286,6 +292,14 @@ public class ApcController extends HttpServlet {
             if (request.isUserInRole(ROLE_FACULTY)) {
                 roles.add(ROLE_FACULTY);
             }
+            
+            ///////////////////////////////////////////////////////////////////////////////////////
+            // ISSUE 2: The following three lines should prevent the app from caching in browsers,
+            // eliminating the cahcing issue by preventing it from having the chance to occur.
+            // response.addDateHeader("Expires", 0);
+            // response.addHeader("Pragma", "no-cache");
+            // response.addHeader("Cache-control", "no-cache,no-store-must-revalidate");
+            ///////////////////////////////////////////////////////////////////////////////////////            
             
             switch(data.getString("q")){
                 case "create":               
