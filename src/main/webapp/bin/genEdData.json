@@ -1,0 +1,92 @@
+[
+    {
+        "name": "BL",
+        "title": "Bible",
+        "effective": "1483-12-10T06:00:00.000Z",
+        "end": null
+    },
+    {
+        "name": "SKL",
+        "title": "Skill",
+        "effective": "1483-12-10T06:00:00.000Z",
+        "end": null
+    },
+    {
+        "name": "WEL",
+        "title": "Wellness",
+        "effective": "1483-12-10T06:00:00.000Z",
+        "end": null
+    },
+    {
+        "name": "REL",
+        "title": "Religion",
+        "effective": "1483-12-10T06:00:00.000Z",
+        "end": null
+    },
+    {
+        "name": "NWL",
+        "title": "Natural World Lab",
+        "effective": "1483-12-10T06:00:00.000Z",
+        "end": null
+    },
+    {
+        "name": "NWNL",
+        "title": "Natural World Non-Lab",
+        "effective": "1483-12-10T06:00:00.000Z",
+        "end": null
+    },
+    {
+        "name": "HB",
+        "title": "Human Behavior",
+        "effective": "1483-12-10T06:00:00.000Z",
+        "end": null
+    },
+    {
+        "name": "HBSSM",
+        "title": "Human Behavior Social Science Methods",
+        "effective": "1483-12-10T06:00:00.000Z",
+        "end": null
+    },
+    {
+        "name": "HE",
+        "title": "Human Expression",
+        "effective": "1483-12-10T06:00:00.000Z",
+        "end": null
+    },
+    {
+        "name": "HEPT",
+        "title": "Human Expression Primary Texts",
+        "effective": "1483-12-10T06:00:00.000Z",
+        "end": null
+    },
+    {
+        "name": "INTCL",
+        "title": "Intercultural",
+        "effective": "1483-12-10T06:00:00.000Z",
+        "end": null
+    },
+    {
+        "name": "HIST",
+        "title": "History",
+        "effective": "1483-12-10T06:00:00.000Z",
+        "end": null
+    },
+    {
+        "name": "QUANT",
+        "title": "Quantititive",
+        "effective": "1483-12-10T06:00:00.000Z",
+        "end": null
+    },
+    {
+        "name": "WRITING",
+        "title": "Writing",
+        "effective": "1483-12-10T06:00:00.000Z",
+        "end": null
+    },
+    {
+        "name": "J2",
+        "title": "January Term 2",
+        "effective": "1483-12-10T06:00:00.000Z",
+        "end": null
+    }
+]
