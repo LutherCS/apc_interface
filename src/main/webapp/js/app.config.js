@@ -53,6 +53,10 @@ app.config(['$routeProvider', function($routeProvider){
 		templateUrl : "templates/archives.html",
 		controller : "archivesCtrl"
 	})
+        .when("/dashboard/calendar", {
+		templateUrl : "templates/calendar.html",
+		controller : "calendarCtrl"
+	})
 	.when("/user/:user", {
 		templateUrl : "templates/user-profile.html",
 		controller : "userCtrl",
