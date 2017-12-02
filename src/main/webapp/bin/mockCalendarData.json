@@ -2,16 +2,19 @@
 	{
 		"date": "2017-12-10T06:00:00.000Z",
 		"title": "Submit all proposals.",
+		"tags": "",
 		"description": "All proposals should be submitted by this date." 
 	},
 	{
 		"date": "2018-1-10T06:00:00.000Z",
 		"title": "Accept all proposals.",
+		"tags": "",
 		"description": "All proposals should be accepted by this date." 
 	},
 	{
 		"date": "2018-5-10T06:00:00.000Z",
 		"title": "Reject all proposals.",
+		"tags":,
 		"description": "All proposals should be rejected by this date." 
 	}
 ]
