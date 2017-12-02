@@ -224,6 +224,15 @@ public class ApcController extends HttpServlet {
                         status = STATUS_BAD_REQUEST;
                     }
                     break;
+                case "events":
+                    try {
+                        resp = this.dao.getAll(Collections.COLLECTION_EVENTS);
+                        status = STATUS_OK;
+                    } catch (Exception ex){
+                        resp = "";
+                        status = STATUS_BAD_REQUEST;
+                    }
+                    break;
                 case "archiveSearch":
                     try {
                         String searchString = request.getParameter("s");

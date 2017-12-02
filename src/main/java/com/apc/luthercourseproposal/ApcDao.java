@@ -40,7 +40,8 @@ public class ApcDao {
         COLLECTION_USERS("users"),
         COLLECTION_PROPOSALS("proposals"),
         COLLECTION_DEPTS("depts"),
-        COLLECTION_ARCHIVES("archives");
+        COLLECTION_ARCHIVES("archives"),
+        COLLECTION_EVENTS("events");
         
         private String name;
         
