@@ -85,7 +85,7 @@ function proposalCtrl($rootScope, $scope, $log, $location, $routeParams, $filter
 				//if it is already a proposal, set scope.proposal
 				$scope.proposal = course;
 			}
-			$scope.selectedDept = $filter("filter")($scope.depts, { abbrev : $scope.proposal.newCourse.dept})[0];
+			$scope.selectedDept = $filter("filter")($scope.depts, { abbrev : $scope.proposal.newCourse.dept}, true)[0];
 			$scope.courseNum = $scope.proposal.newCourse.name.split("-")[1];
 		}
 	}
