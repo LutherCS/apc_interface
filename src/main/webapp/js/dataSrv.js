@@ -11,6 +11,7 @@ app.factory("dataSrv", ["$http", "$log", "$rootScope", "$filter", "DATA_URL", "E
 		getProposals : getProposals,
 		getRecentlyViewed : getRecent,
 		getDepts : getDepts,
+                getGenEds : getGenEds,  // ISSUE 29 (See definition below)
 		editUser : editUser,
 		saveProposal : saveProposal,
 		createProposal : createProposal,
@@ -105,6 +106,24 @@ app.factory("dataSrv", ["$http", "$log", "$rootScope", "$filter", "DATA_URL", "E
 			handleError(response);
 		});
 	}
+
+        // ISSUE 29 (Database-driven gen eds): Add this function to call the api 
+        // to query the database for gen eds. Also register it above.
+        // Also see proposal.js.
+        function getGenEds() {
+                return $http({
+                                        method : "GET",
+                                        url : DATA_URL,
+                                        params : {
+                                                q : "geneds"
+                                        }
+                }).then(function success(response) {
+                        $log.info("Retrieved gen eds data");
+                        return response.data;
+                }, function(response) {
+                        handleError(response);
+                });
+        }
 
 	/**
 	 *

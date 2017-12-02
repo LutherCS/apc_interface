@@ -19,7 +19,31 @@ function proposalCtrl($rootScope, $scope, $log, $location, $routeParams, $filter
 	$scope.prevPage = params.prevPage;
 
 	$scope.chosenGenEd = null;
-	$scope.gen_eds = ["BL", "SKL", "WEL", "REL", "NWL", "NWNL", "HB", "HBSSM", "HE", "HEPT", "INTCL", "HIST", "QUANT", "WRITING", "J2"];
+	
+        // ISSUE 29 (Database-driven gen eds):
+        // Previously, gen eds were hard-coded like so:
+        // $scope.gen_eds = ["BL", "SKL", "WEL", "REL", "NWL", "NWNL", "HB", "HBSSM", "HE", "HEPT", "INTCL", "HIST", "QUANT", "WRITING", "J2"];
+        // This is not a particularly effective approach because we may need to,
+        // say, add more gen eds to the database. The solution is to make gen eds
+        // database driven. In issue-4 we added gen eds to a database. Here we
+        // retrieve those gen eds from the database. In the database, each gen ed
+        // has four attributes: name (INTCL), title (Intercultural), effective 
+        // (the date the gen ed takes effect in (new Date).toJSON()) format), and
+        // end (the date the gen ed is removed from effect in the same format as
+        // before). The code below filters the gen eds queried from the database
+        // in initData in app.js by whether they are effective. This is when
+        // the condition effective < today < end is true. Then we create a list
+        // using map of all of the names of the gen eds to get an array in the
+        // format expected in the hard-coded string above.
+        // Also see dataSrv.js, app.js, ApcDao.java, ApcController.java.
+        var someGenEds = $filter("filter")($scope.allGenEds, function(val, idx, all) {
+            today = (new Date()).toJSON();
+            genEdIsInEffect = false;
+            if (val.effective < today && val.end > today) 
+                genEdIsInEffect = true;
+            return genEdIsInEffect;
+        }, true);
+        $scope.gen_eds = $scope.allGenEds.map(function(ed) {return ed.name});
 
 	initProposal();
 
