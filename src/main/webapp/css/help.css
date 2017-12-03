@@ -1,0 +1,53 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Dec 2, 2017, 6:20:15 PM
+    Author     : couger01
+*/
+
+.tutorial h4 {
+    color: white;
+    padding: 5px;
+    background-color: #337ab7;
+    border: 1px solid white;
+    border-radius: 15px;
+}
+
+.guide h4 {
+    color: white;
+    padding: 5px;
+    background-color: #337ab7;
+    border: 1px solid white;
+    border-radius: 15px;
+}
+
+.tutorial ol {
+    padding: 10px 15px;
+    background-color: lightgrey;
+    border: 1px solid white;
+}
+
+.description p {
+    text-align: center;
+    background-color: #337ab7;
+    padding: 10px;
+    color: white;
+    font-weight: bold;
+}
+
+.guide dl {
+    padding: 10px;
+    background-color: #f5f5f5;
+    border: 1px solid white;
+}
+.guide dl dt {
+    background-color: lightgrey;
+}
+
+.guide dl dt dd {
+    background-color: lightgrey;
+    padding: 2px;
+}
