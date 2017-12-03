@@ -5,6 +5,12 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <div class="container-fluid">
-    <div class="title">APC Calendar of Events</div>
-    <div class="title">{{user.name}}</div>
+    <ul>
+        <li ng-repeat="item in calendar">
+            <span>{{item.date}}</span>
+            <span>{{item.title}}</span>
+            <span>{{item.tags}}</span>
+            <span>{{item.description}}</span>
+        </li>
+    </ul>
 </div>
