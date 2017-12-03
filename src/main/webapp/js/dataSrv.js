@@ -11,6 +11,7 @@ app.factory("dataSrv", ["$http", "$log", "$rootScope", "$filter", "DATA_URL", "E
 		getProposals : getProposals,
 		getRecentlyViewed : getRecent,
 		getDepts : getDepts,
+                getEvents : getEvents,
 		editUser : editUser,
 		saveProposal : saveProposal,
 		createProposal : createProposal,
@@ -105,6 +106,21 @@ app.factory("dataSrv", ["$http", "$log", "$rootScope", "$filter", "DATA_URL", "E
 			handleError(response);
 		});
 	}
+        
+        function getEvents() {
+                return $http({
+					method : "GET",
+					url : DATA_URL,
+					params : {
+						q : "events"
+					}
+		}).then(function success(response) {
+			$log.info("Retrieved calendar data");
+			return response.data;
+		}, function(response) {
+			handleError(response);
+		});
+        }
 
 	/**
 	 *
