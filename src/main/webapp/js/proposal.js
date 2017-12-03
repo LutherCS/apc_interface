@@ -39,8 +39,11 @@ function proposalCtrl($rootScope, $scope, $log, $location, $routeParams, $filter
         var someGenEds = $filter("filter")($scope.allGenEds, function(val, idx, all) {
             today = (new Date()).toJSON();
             genEdIsInEffect = false;
-            if (val.effective < today && val.end > today) 
-                genEdIsInEffect = true;
+            if (val.effective < today) {
+                if (val.end === null || today < val.end) {
+                    genEdIsInEffect = true;
+                }
+            }
             return genEdIsInEffect;
         }, true);
         $scope.gen_eds = $scope.allGenEds.map(function(ed) {return ed.name});
