@@ -92,6 +92,7 @@ public class ApcController extends HttpServlet {
     private static final String ROLE_ADMIN = "apc_development";
     private static final String ROLE_FACULTY = "Faculty";
     private static final String ROLE_REGISTRAR = "Registrars_Office";
+    private static final String ROLE_STAFF = "apc_staff";
     
     /**
      * Handles the HTTP requests. Switches based on method type, and handles
@@ -151,6 +152,9 @@ public class ApcController extends HttpServlet {
             }
             if (request.isUserInRole(ROLE_FACULTY)) {
                 roleBuilder.add(ROLE_FACULTY);
+            }
+            if (request.isUserInRole(ROLE_STAFF)) {
+                roleBuilder.add(ROLE_STAFF);
             }
             JsonArray roles = roleBuilder.build();
             
@@ -286,11 +290,14 @@ public class ApcController extends HttpServlet {
             if (request.isUserInRole(ROLE_FACULTY)) {
                 roles.add(ROLE_FACULTY);
             }
+            if (request.isUserInRole(ROLE_STAFF)) {
+                roles.add(ROLE_STAFF);
+            }
             
             switch(data.getString("q")){
                 case "create":               
                     try{
-                        if (!roles.contains(ROLE_ADMIN) && !roles.contains(ROLE_FACULTY)) {
+                        if (!roles.contains(ROLE_ADMIN) && !roles.contains(ROLE_FACULTY) && !roles.contains(ROLE_STAFF)) {
                             throw new Exception("User is not allowed to create a proposal - contact admin for priveleges.");
                         }
                         resp = this.dao.createProposal(data.getJsonObject("d"));
@@ -313,7 +320,7 @@ public class ApcController extends HttpServlet {
                     break;
                 case "save":
                     try{
-                        if (!roles.contains(ROLE_ADMIN) && !roles.contains(ROLE_FACULTY)) {
+                        if (!roles.contains(ROLE_ADMIN) && !roles.contains(ROLE_FACULTY) && !roles.contains(ROLE_STAFF)) {
                             throw new Exception("User is not allowed to update proposals - contact admin for priveleges.");
                         }
                         resp = this.dao.saveProposal(data.getJsonObject("d"));
