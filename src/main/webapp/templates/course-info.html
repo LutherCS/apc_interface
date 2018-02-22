@@ -21,8 +21,14 @@
             </div>
             <div class="col-xs-4">
                 <div ng-if="!hideButtons" style="margin-right:10px;">
-                    <btn-menu></btn-menu>
-                    <a class="approveReject" ng-if="course.owner == user.name" ng-href="#/{{course.newCourse.name}}/{{course.newCourse.title|qescape}}/edit"><div class="btn btn-primary pull-right"><span class="glyphicon glyphicon-pencil"></span> Edit</div></a>
+                        <btn-menu></btn-menu>
+                        <div class="container">
+                            <a type="button" class="btn btn-primary pull-right" ng-if="course.owner == user.name" ng-href="#/{{course.newCourse.name}}/{{course.newCourse.title|qescape}}/edit"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
+                            <a type="button" class="btn btn-warning pull-right" ng-if="user.name == course.owner && !(user.role.length == 1 && user.role.indexOf('Registrars_Office') != -1)" data-toggle="modal" data-target="#remove-prop-modal-{{course.newCourse.name}}"><span class="glyphicon glyphicon-pencil"></span> Delete</a>
+                        </div>
+                        <!-- <a type="button" class="approveReject" ng-if="course.owner == user.name" ng-href="#/{{course.newCourse.name}}/{{course.newCourse.title|qescape}}/edit"><div class="btn btn-primary pull-right"><span class="glyphicon glyphicon-pencil"></span> Edit</div></a>
+                        <a type="button" data-toggle="modal" data-target="#remove-prop-modal-{{course.newCourse.name}}" class="btn btn-primary pull-right" ng-if="user.name == course.owner && !(user.role.length == 1 && user.role.indexOf('Registrars_Office') != -1)"><span class="glyphicon glyphicon-trash"></span></a> -->
+                    <!--</div> -->
                 </div>
             </div>
             <!-- this div duplicated bit lower in code, but hidden in different circumstances, depending if it's archive or course/proposal view -->
