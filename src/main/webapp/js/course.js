@@ -126,6 +126,56 @@ app.directive("course", function() {
     }
 });
 
+function markPropRemovalPopup() {
+    return {
+        restrict : "E",
+        templateUrl : "templates/confirmation-popup.html",
+        controller : ["$scope", "$log", "courseSrv", function($scope, $log, courseSrv) {
+                $scope;
+        }],
+    scope : {
+        modalId : "@",
+        action : "@",
+        msg : "@",
+        confirmFunc : "=",
+        course : "="
+    }
+    };
+}
+
+function markCourseRemovalPopup() {
+    return {
+        restrict : "E",
+        templateUrl : "templates/confirmation-popup.html",
+        controller : ["$scope", "$log", "courseSrv", function($scope, $log, courseSrv) {
+                $scope;
+        }],
+    scope : {
+        modalId : "@",
+        action : "@",
+        msg : "@",
+        confirmFunc : "=",
+        course : "="
+    }
+    };
+}
+
+function removeCoursePopup() {
+    return {
+        restrict : "E",
+        templateUrl : "templates/confirmation-popup.html",
+        controller : ["$scope", "$log", "courseSrv", function($scope, $log, courseSrv) {
+                $scope.deleteProp = courseSrv;
+        }],
+    scope : {
+        modalId : "@",
+        action : "@",
+        msg : "@",
+        confirmFunc : "=",
+        course : "="
+    }
+    };
+}
 
 function removePropPopup(){
 	return {
