@@ -94,6 +94,15 @@ app.factory("courseSrv", ["$rootScope", "$location", "userSrv", "dataSrv", "EVEN
     	});
         }
         
+        markCourseForDeletion = function(course) {
+                var modal = angular.element("#remove-course-modal-"+course.name);
+                modal.modal("show");
+        }
+        
+        submitDeleteProposal = function(course) {
+            var modal = angular.element("#remove-course-modal-"+course.name);
+            modal.modal("hide");
+        }
 
 	return {
 		approve : approve,
