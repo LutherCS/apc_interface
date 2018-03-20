@@ -82,6 +82,8 @@ function courseCtrl($rootScope, $scope, $filter, $log, $routeParams, $location, 
         $scope.submitDeleteProposal = function(course) {
             var modal = angular.element("#remove-course-modal-"+course.name);
             modal.modal("hide");
+            angular.element(".modal-backdrop")[0].remove();
+            angular.element("body").removeClass("modal-open");
             $scope.proposal = $scope.deleteProposalFields;
             $scope.proposal.owner = $scope.user.name;
             $scope.proposal.stage = 0;
@@ -176,7 +178,8 @@ function markCourseRemovalPopup() {
         action : "@",
         msg : "@",
         confirmFunc : "=",
-        course : "="
+        course : "=",
+        proposal : "="
     }
     };
 }
