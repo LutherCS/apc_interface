@@ -42,9 +42,9 @@
         <small class="pull-right"> Owner : {{course.owner}}</small>
     </div>
     <remove-prop-popup modal-id="remove-prop-modal-{{course.newCourse.name}}" action="Remove {{course.newCourse.name}}" confirm-func="deleteProp" msg="Are you sure you want to reject this proposal? This will delete all proposed changes." course="course"></remove-prop-popup>
-    <remove-prop-popup modal-id="remove-course-modal-{{course.name}}" action="Remove {{course.name}}" confirm-func="deleteProp" msg="Are you sure you want to delete this course? This will delete the course forever." course="course"></remove-course-popup>
 </div>
 <div ng-if="course.name != null">
+    <mark-course-removal-popup modal-id="remove-course-modal-{{course.name}}" action="Mark {{course.name}} for Deletion" confirm-func="submitDeleteProposal" msg="Are you sure you want to mark this course for deletion? Note: This will not immediately delete the course." course="course"></mark-course-removal-popup>
     <div class="container-fluid courseLink">
         <div class="col-xs-8" ng-class="{'col-xs-3' : extendedview == true}" style="padding-left: 0;">
             <a ng-href="#/{{course.name}}/{{course.title}}">{{course.name}}
@@ -59,7 +59,7 @@
         <div class="col-xs-4 pull-right" style="padding-right: 0;">
             <a href="" title="View Archive" class="btn btn-edit pull-right" ng-click="getArchiveById(course._id.$oid)"><span class="glyphicon glyphicon-book"></span></a>
             <a href="#/{{course.name}}/{{course.title|qescape}}/edit" class="btn btn-edit pull-right" ng-if="!(user.role.length == 1 && user.role.indexOf('Registrars_Office') != -1)"><span class="glyphicon glyphicon-pencil"></span></a>
-            <!--<a data-toggle="modal" data-target="#remove-course-modal-{{course.name}}" class="btn btn-edit pull-right" ng-if="course.newCourse == null && course.oldCourse == null && !(user.role.length == 1 && user.role.indexOf('Registrars_Office') != -1)"><span class="glyphicon glyphicon-trash"></span></a>-->
+            <a data-toggle="modal" data-target="#remove-course-modal-{{course.name}}" class="btn btn-edit pull-right" ng-if="course.newCourse == null && course.oldCourse == null && !(user.role.length == 1 && user.role.indexOf('Registrars_Office') != -1)"><span class="glyphicon glyphicon-trash"></span></a>
         </div>
         <div ng-if="!extendedview">
             <div class="container-fluid">

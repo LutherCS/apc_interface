@@ -1,23 +1,36 @@
 <!-- Modal -->
 <div class="modal fade" id="{{modalId}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog" role="document">
-    	<div class="modal-content">
-    		<div class="modal-header">
-    			<button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</span></button>
-    			<h4 class="modal-title" id="myModalLabel">Confirm {{action}}</h4>
-    		</div>
-    		<div class="modal-body">
-				<div class="container-fluid">
-					<div class="well well-lg">
-						{{msg}}
-					</div>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button ng-if="course" type="button" class="btn btn-danger pull-right" ng-click="confirmFunc(course)"><span class="glyphicon glyphicon-trash"></span> {{action}}</button>
-				<button ng-if="!course" type="button" class="btn btn-danger pull-right" ng-click="confirmFunc()"><span class="glyphicon glyphicon-trash"></span> {{action}}</button>
-				<button type="button" class="btn btn-default pull-right" style="margin-right: 10px;" aria-label="Close" data-dismiss="modal">Cancel</button>
-			</div>
-		</div>
+            <div class="modal-content">
+                    <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Confirm {{action}}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                                <div class="well well-lg">
+                                        {{msg}}
+                                </div>
+                        </div>
+                        <form ng-submit="confirmFunc(course)" id="mark-course-deletion-form">
+    				<div class="form-group form-inline">
+                                    <label> Rationale </label>
+                                    <textarea class="form-control" rows="3" ng-model="deleteProposalFields.rationale"></textarea>
+    				</div>
+                                <div class="form-group form-inline">
+                                    <label> Impact on Major/Minor/Program </label>
+                                    <textarea class="form-control" rows="3" ng-model="deleteProposalFields.impact"></textarea>
+    				</div>
+                                <div class="form-group form-inline">
+                                    <label> Staffing Implications </label>
+                                    <textarea class="form-control" rows="3" ng-model="deleteProposalFields.staffing"></textarea>
+    				</div>
+    			</form>
+                    </div>
+                    <div class="modal-footer">
+                            <button type="submit" form="mark-course-deletion-form" class="btn btn-danger pull-right"> <span class="glyphicon glyphicon-trash"></span> Submit</button>
+                            <button type="button" class="btn btn-default pull-right" style="margin-right: 10px;" aria-label="Close" data-dismiss="modal">Cancel</button>
+                    </div>
+            </div>
 	</div>
 </div>

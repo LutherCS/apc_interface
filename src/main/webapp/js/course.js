@@ -3,6 +3,7 @@ var app = angular.module("CourseProposalApp");
 app.controller("courseCtrl", courseCtrl);
 app.directive("revokeApcPrivilegesPopup", revokeApcPrivilegesPopup);
 app.directive("removePropPopup", removePropPopup);
+app.directive("markCourseRemovalPopup", markCourseRemovalPopup);
 app.directive("courseInfo", courseInfo);
 
 courseCtrl.$inject=["$rootScope", "$scope", "$filter", "$log", "$routeParams", "$location", "userSrv", "courseSrv", "archiveSrv"];
@@ -29,6 +30,15 @@ function courseCtrl($rootScope, $scope, $filter, $log, $routeParams, $location, 
 	$scope.approve = courseSrv.approve;
 	$scope.reject = courseSrv.reject;
 	$scope.deleteProp = courseSrv.deleteProp;
+        
+        // Add function to control delete modal behavior.
+        $scope.submitDeleteProposal = courseSrv.submitDeleteProposal;
+        // Create a blank proposal for when we want to mark a course for deletion.
+        $scope.deleteProposalFields = {
+            "rationale" : "",
+            "staffing" : "",
+            "impact" : ""
+        };
 
 	$scope.getArchiveById = archiveSrv.getArchiveById;
         $scope.archiveProp = archiveSrv.archiveProposal;
@@ -94,13 +104,34 @@ app.factory("courseSrv", ["$rootScope", "$location", "userSrv", "dataSrv", "EVEN
     	});
         }
         
-        markCourseForDeletion = function(course) {
-                var modal = angular.element("#remove-course-modal-"+course.name);
-                modal.modal("show");
-        }
-        
         submitDeleteProposal = function(course) {
             var modal = angular.element("#remove-course-modal-"+course.name);
+            console.log("HELLO EVERYONE HOUSTON IS NOT A PROBLEM!!!")
+            $scope.proposal = $scope.deleteProposalFields;
+            $scope.proposal.owner = $scope.user.name;
+            $scope.proposal.stage = 0;
+            $scope.proposal.date = new Date();
+            $scope.terms = [];
+            $scope.oldCourse = course;
+            $scope.fees = "";
+            $scope.est_enrollment = 0;
+            $scope.instructors = [];
+            $scope.comments = [];
+            $scope.newCourse = course;
+            $scope.action = "DEL";
+            if ($scope.proposal._id) {
+                    dataSrv.saveProposal($scope.proposal).then(function(data) {
+                            $location.path("#/"+$scope.proposal.newCourse.name+"/"+$scope.proposal.newCourse.title).replace();
+                    }, function(err) {
+                            $log.err("Proposal not saved: "+err);
+                    });
+            } else {
+                    dataSrv.createProposal($scope.proposal).then(function(data) {
+                            $location.path("#/"+$scope.proposal.newCourse.name+"/"+$scope.proposal.newCourse.title).replace();
+                    }, function(err) {
+                            $log.err("Proposal not saved: "+err);
+                    });
+            }
             modal.modal("hide");
         }
 
@@ -108,6 +139,7 @@ app.factory("courseSrv", ["$rootScope", "$location", "userSrv", "dataSrv", "EVEN
 		approve : approve,
 		reject : reject,
 		deleteProp : deleteProp,
+                submitDeleteProposal : submitDeleteProposal
 	}
 
 }])
@@ -135,46 +167,12 @@ app.directive("course", function() {
     }
 });
 
-function markPropRemovalPopup() {
-    return {
-        restrict : "E",
-        templateUrl : "templates/confirmation-popup.html",
-        controller : ["$scope", "$log", "courseSrv", function($scope, $log, courseSrv) {
-                $scope;
-        }],
-    scope : {
-        modalId : "@",
-        action : "@",
-        msg : "@",
-        confirmFunc : "=",
-        course : "="
-    }
-    };
-}
-
 function markCourseRemovalPopup() {
     return {
         restrict : "E",
-        templateUrl : "templates/confirmation-popup.html",
+        templateUrl : "templates/course-deletion-popup.html",
         controller : ["$scope", "$log", "courseSrv", function($scope, $log, courseSrv) {
-                $scope;
-        }],
-    scope : {
-        modalId : "@",
-        action : "@",
-        msg : "@",
-        confirmFunc : "=",
-        course : "="
-    }
-    };
-}
-
-function removeCoursePopup() {
-    return {
-        restrict : "E",
-        templateUrl : "templates/confirmation-popup.html",
-        controller : ["$scope", "$log", "courseSrv", function($scope, $log, courseSrv) {
-                $scope.deleteProp = courseSrv;
+                $scope.submitDeleteProposal = courseSrv;
         }],
     scope : {
         modalId : "@",
