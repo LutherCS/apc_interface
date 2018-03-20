@@ -13,15 +13,15 @@
                                 </div>
                         </div>
                         <form ng-submit="confirmFunc(course)" id="mark-course-deletion-form">
-    				<div class="form-group form-inline">
+    				<div class="form-group" ng-required="true">
                                     <label> Rationale </label>
                                     <textarea class="form-control" rows="3" ng-model="deleteProposalFields.rationale"></textarea>
     				</div>
-                                <div class="form-group form-inline">
+                                <div class="form-group" ng-required="true">
                                     <label> Impact on Major/Minor/Program </label>
                                     <textarea class="form-control" rows="3" ng-model="deleteProposalFields.impact"></textarea>
     				</div>
-                                <div class="form-group form-inline">
+                                <div class="form-group" ng-required="true">
                                     <label> Staffing Implications </label>
                                     <textarea class="form-control" rows="3" ng-model="deleteProposalFields.staffing"></textarea>
     				</div>

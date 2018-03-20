@@ -6,8 +6,8 @@ app.directive("removePropPopup", removePropPopup);
 app.directive("markCourseRemovalPopup", markCourseRemovalPopup);
 app.directive("courseInfo", courseInfo);
 
-courseCtrl.$inject=["$rootScope", "$scope", "$filter", "$log", "$routeParams", "$location", "userSrv", "courseSrv", "archiveSrv"];
-function courseCtrl($rootScope, $scope, $filter, $log, $routeParams, $location, userSrv, courseSrv, archiveSrv) {
+courseCtrl.$inject=["$rootScope", "$scope", "$filter", "$log", "$routeParams", "$location", "userSrv", "courseSrv", "archiveSrv", "dataSrv"];
+function courseCtrl($rootScope, $scope, $filter, $log, $routeParams, $location, userSrv, courseSrv, archiveSrv, dataSrv) {
 	var courseName;
         var courseTitle;
 
@@ -31,8 +31,6 @@ function courseCtrl($rootScope, $scope, $filter, $log, $routeParams, $location, 
 	$scope.reject = courseSrv.reject;
 	$scope.deleteProp = courseSrv.deleteProp;
         
-        // Add function to control delete modal behavior.
-        $scope.submitDeleteProposal = courseSrv.submitDeleteProposal;
         // Create a blank proposal for when we want to mark a course for deletion.
         $scope.deleteProposalFields = {
             "rationale" : "",
@@ -80,6 +78,37 @@ function courseCtrl($rootScope, $scope, $filter, $log, $routeParams, $location, 
 			return 'progress-bar-danger';
 		}
 	};
+        
+        $scope.submitDeleteProposal = function(course) {
+            var modal = angular.element("#remove-course-modal-"+course.name);
+            modal.modal("hide");
+            $scope.proposal = $scope.deleteProposalFields;
+            $scope.proposal.owner = $scope.user.name;
+            $scope.proposal.stage = 0;
+            $scope.proposal.date = new Date();
+            $scope.proposal.terms = [];
+            $scope.proposal.oldCourse = course;
+            $scope.proposal.fees = "";
+            $scope.proposal.est_enrollment = 0;
+            $scope.proposal.instructors = [];
+            $scope.proposal.comments = [];
+            $scope.proposal.newCourse = course;
+            $scope.proposal.action = "DEL";
+            delete $scope.proposal.newCourse._id;
+            if ($scope.proposal._id) {
+                    dataSrv.saveProposal($scope.proposal).then(function(data) {
+                            $location.path("#/"+$scope.proposal.newCourse.name+"/"+$scope.proposal.newCourse.title).replace();
+                    }, function(err) {
+                            $log.err("Proposal not saved: "+err);
+                    });
+            } else {
+                    dataSrv.createProposal($scope.proposal).then(function(data) {
+                            $location.path("#/"+$scope.proposal.newCourse.name+"/"+$scope.proposal.newCourse.title).replace();
+                    }, function(err) {
+                            $log.err("Proposal not saved: "+err);
+                    });
+            }
+        }
 }
 
 app.factory("courseSrv", ["$rootScope", "$location", "userSrv", "dataSrv", "EVENTS", function($rootScope, $location, userSrv, dataSrv, EVENTS){
@@ -103,43 +132,11 @@ app.factory("courseSrv", ["$rootScope", "$location", "userSrv", "dataSrv", "EVEN
     		$location.path("/");
     	});
         }
-        
-        submitDeleteProposal = function(course) {
-            var modal = angular.element("#remove-course-modal-"+course.name);
-            console.log("HELLO EVERYONE HOUSTON IS NOT A PROBLEM!!!")
-            $scope.proposal = $scope.deleteProposalFields;
-            $scope.proposal.owner = $scope.user.name;
-            $scope.proposal.stage = 0;
-            $scope.proposal.date = new Date();
-            $scope.terms = [];
-            $scope.oldCourse = course;
-            $scope.fees = "";
-            $scope.est_enrollment = 0;
-            $scope.instructors = [];
-            $scope.comments = [];
-            $scope.newCourse = course;
-            $scope.action = "DEL";
-            if ($scope.proposal._id) {
-                    dataSrv.saveProposal($scope.proposal).then(function(data) {
-                            $location.path("#/"+$scope.proposal.newCourse.name+"/"+$scope.proposal.newCourse.title).replace();
-                    }, function(err) {
-                            $log.err("Proposal not saved: "+err);
-                    });
-            } else {
-                    dataSrv.createProposal($scope.proposal).then(function(data) {
-                            $location.path("#/"+$scope.proposal.newCourse.name+"/"+$scope.proposal.newCourse.title).replace();
-                    }, function(err) {
-                            $log.err("Proposal not saved: "+err);
-                    });
-            }
-            modal.modal("hide");
-        }
 
 	return {
 		approve : approve,
 		reject : reject,
-		deleteProp : deleteProp,
-                submitDeleteProposal : submitDeleteProposal
+		deleteProp : deleteProp
 	}
 
 }])
