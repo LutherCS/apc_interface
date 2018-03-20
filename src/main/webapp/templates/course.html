@@ -7,7 +7,8 @@
                 <br>
                 <span class="courseTitle"><strong>{{course.newCourse.title}} </strong> </span>
                 <small ng-if="course.oldCourse == null" style="color: green;">[New Course]</small>
-                <small ng-if="course.oldCourse != null" style="color: green;">[Modified Course]</small>                
+                <small ng-if="course.oldCourse != null && course.action != 'DEL'" style="color: green;">[Modified Course]</small>
+                <small ng-if="course.oldCourse != null && course.action == 'DEL'" style="color: red;">[Marked for Deletion]</small>   
                 <small ng-if="course.oldCourse && course.oldCourse.title != course.newCourse.title" class="old-course"><br>{{course.oldCourse.title}}</small>
             </a>
         </div>
@@ -44,7 +45,7 @@
     <remove-prop-popup modal-id="remove-prop-modal-{{course.newCourse.name}}" action="Remove {{course.newCourse.name}}" confirm-func="deleteProp" msg="Are you sure you want to reject this proposal? This will delete all proposed changes." course="course"></remove-prop-popup>
 </div>
 <div ng-if="course.name != null">
-    <mark-course-removal-popup modal-id="remove-course-modal-{{course.name}}" action="Mark {{course.name}} for Deletion" confirm-func="submitDeleteProposal" msg="Are you sure you want to mark this course for deletion? Note: This will not immediately delete the course." course="course"></mark-course-removal-popup>
+    <mark-course-removal-popup modal-id="remove-course-modal-{{course.name}}" action="Mark {{course.name}} for Deletion" confirm-func="submitDeleteProposal" msg="Are you sure you want to mark this course for deletion? Note: This will not immediately delete the course." course="course" proposal="deleteProposalFields"></mark-course-removal-popup>
     <div class="container-fluid courseLink">
         <div class="col-xs-8" ng-class="{'col-xs-3' : extendedview == true}" style="padding-left: 0;">
             <a ng-href="#/{{course.name}}/{{course.title}}">{{course.name}}
