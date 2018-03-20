@@ -12,8 +12,11 @@
                 <div class="inlineBlock" ng-if="!course.oldCourse">
                     <strong style="color:green;">[New Course]</strong>
                 </div>
-                <div class="inlineBlock" ng-if="course.oldCourse != null">
+                <div class="inlineBlock" ng-if="course.oldCourse != null && course.action != 'DEL'">
                     <strong style="color:green;">[Modified Course]</strong>
+                </div>
+                <div class="inlineBlock" ng-if="course.oldCourse != null && course.action == 'DEL'">
+                    <strong style="color:red;">[Marked for Deletion]</strong>
                 </div>
             </div>
             <div class="col-xs-4 text-center" ng-hide="isArchive">
@@ -23,8 +26,8 @@
                 <div ng-if="!hideButtons" style="margin-right:10px;">
                         <btn-menu></btn-menu>
                         <div class="container">
-                            <a type="button" class="btn btn-primary pull-right" ng-if="course.owner == user.name" ng-href="#/{{course.newCourse.name}}/{{course.newCourse.title|qescape}}/edit"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
-                            <a type="button" class="btn btn-warning pull-right" ng-if="user.name == course.owner && !(user.role.length == 1 && user.role.indexOf('Registrars_Office') != -1)" data-toggle="modal" data-target="#remove-prop-modal-{{course.newCourse.name}}"><span class="glyphicon glyphicon-pencil"></span> Delete</a>
+                            <a type="button" class="btn btn-primary pull-right" style="margin-right:10px;" ng-if="course.owner == user.name" ng-href="#/{{course.newCourse.name}}/{{course.newCourse.title|qescape}}/edit"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
+                            <a type="button" class="btn btn-danger pull-right" style="margin-right:10px;" ng-if="course.owner == user.name && !(user.role.length == 1 && user.role.indexOf('Registrars_Office') != -1)" data-toggle="modal" data-target="#remove-prop-modal-{{course.newCourse.name}}"><span class="glyphicon glyphicon-trash"></span> Delete Proposal</a>
                         </div>
                         <!-- <a type="button" class="approveReject" ng-if="course.owner == user.name" ng-href="#/{{course.newCourse.name}}/{{course.newCourse.title|qescape}}/edit"><div class="btn btn-primary pull-right"><span class="glyphicon glyphicon-pencil"></span> Edit</div></a>
                         <a type="button" data-toggle="modal" data-target="#remove-prop-modal-{{course.newCourse.name}}" class="btn btn-primary pull-right" ng-if="user.name == course.owner && !(user.role.length == 1 && user.role.indexOf('Registrars_Office') != -1)"><span class="glyphicon glyphicon-trash"></span></a> -->
@@ -130,7 +133,7 @@
                     <div class="panel-heading">{{course.oldCourse.capacity}}</div>
                 </div>
             </div>
-            <div class="inlineBlock smallFormField">
+            <div class="inlineBlock smallFormField" ng-if="course.action != 'DEL'">
                 <div class="panel-heading"><strong>Estimated Enrollment</strong></div>
                 <div class="panel panel-default courseInfo sideBySide">
                     <div class="panel-heading">{{course.est_enrollment}}</div>
@@ -149,7 +152,7 @@
                 <div class="panel-heading">{{course.staffing}}</div>
             </div>
         </div>
-        <div class="courseInfo">
+        <div class="courseInfo" ng-if="course.action != 'DEL'">
             <div class="panel-heading"><strong>Instructors</strong></div>
             <div class="panel panel-default">
                 <div class="panel-heading">{{displayListData(course.instructors)}}</div>
@@ -168,7 +171,7 @@
             </div>
         </div>
 
-        <div class="courseInfo">
+        <div class="courseInfo" ng-if="course.action != 'DEL'">
             <div class="panel-heading"><strong>Terms</strong></div>
             <div class="panel panel-default">
                 <div class="panel-heading">{{displayListData(course.terms)}}</div>
@@ -208,6 +211,7 @@
                 <div class="row">
                    <button type="button" title="View Archive"  class="btn btn-default pull-right" ng-click="getArchiveById(course._id.$oid)">See Archive</button>
                    <a ng-href="#/{{course.name}}/{{course.title|qescape}}/edit"><div class="btn btn-primary pull-right" style="margin-right:10px;"><span class="glyphicon glyphicon-pencil"></span> Edit</div></a>
+                   <a type="button" class="btn btn-warning pull-right" style="margin-right:10px;" ng-if="!(user.role.length == 1 && user.role.indexOf('Registrars_Office') != -1)" data-toggle="modal" data-target="#remove-course-modal-{{course.name}}"><span class="glyphicon glyphicon-trash"></span> Mark for Deletion</a>
                 </div>
             </div>
         </h5>
@@ -247,4 +251,5 @@
             </div>
         </div>
     </div>
+    <mark-course-removal-popup modal-id="remove-course-modal-{{course.name}}" action="Mark {{course.name}} for Deletion" confirm-func="submitDeleteProposal" msg="Are you sure you want to mark this course for deletion? Note: This will not immediately delete the course." course="course" proposal="deleteProposalFields"></mark-course-removal-popup>
 </div>
