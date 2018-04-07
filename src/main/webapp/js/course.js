@@ -70,15 +70,6 @@ function courseCtrl($rootScope, $scope, $filter, $log, $routeParams, $location, 
 			return 'progress-bar-danger';
 		}
 	};
-        
-        // (Issue 3) This function creates a link to file attachments stored as
-        // blobs so that they may be downloaded and viewed. Takes as an argument 
-        // a file object
-        $scope.getDownloadLink = function(file) {
-            url = file.data;
-            if(url.startsWith("unsafe:")) return url.substring("unsafe:".length());
-            return url;
-        }
 }
 
 app.factory("courseSrv", ["$rootScope", "$location", "userSrv", "dataSrv", "EVENTS", function($rootScope, $location, userSrv, dataSrv, EVENTS){
