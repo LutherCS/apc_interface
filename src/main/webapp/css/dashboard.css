@@ -254,6 +254,11 @@ blockquote > .quote-body > * {
     float:left;
 }
 
+.select-btn-combo > input[type=file] {
+    width:80%;
+    float:left;
+}
+
 .select-btn-combo > .btn {
     width:20%;
     float:right;
