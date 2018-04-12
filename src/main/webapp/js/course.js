@@ -70,6 +70,35 @@ function courseCtrl($rootScope, $scope, $filter, $log, $routeParams, $location, 
 			return 'progress-bar-danger';
 		}
 	};
+        
+        // (Issue 39) This function builds a printer-friendly HTML page for the
+        // current course. This will help the registrar maintain a paper-based
+        // workflow.
+        $scope.buildPrinterFriendlyPage = function(course) {
+            htmlText = "<!DOCTYPE html>\n\
+                        <html>\n\
+                        <head>\n\
+                            <title>{0}: {1}</title>\n\
+                        </head>\n\
+                        <body>\n".replace("{0}", course.name).replace("{1}", course.title);
+            if (!course.newCourse) {
+                // The course is a course. Build a course page.
+                htmlText += "<header><h1>EXISTING COURSE</h1></header>";
+                htmlText += "<div>\n\
+                             <h5></h5>\n\
+                             <p>Environmental Studies 239</p>\n\
+                             </div>";
+            }
+            else {
+                // The course is a proposal. Build a proposal page.
+                htmlText += "<header><h1>NEW COURSE PROPOSAL</h1></header>";
+                htmlText += "<div class=\"field\">\n\
+                             <h5 class=\"field-header\"></h5>\n\
+                             <p class=\"field-content\"></p>\n\
+                             </div>";
+            }
+            htmlText += "</html>"
+        };
 }
 
 app.factory("courseSrv", ["$rootScope", "$location", "userSrv", "dataSrv", "EVENTS", function($rootScope, $location, userSrv, dataSrv, EVENTS){
