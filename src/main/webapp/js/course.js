@@ -74,30 +74,79 @@ function courseCtrl($rootScope, $scope, $filter, $log, $routeParams, $location, 
         // (Issue 39) This function builds a printer-friendly HTML page for the
         // current course. This will help the registrar maintain a paper-based
         // workflow.
-        $scope.buildPrinterFriendlyPage = function(course) {
-            htmlText = "<!DOCTYPE html>\n\
-                        <html>\n\
-                        <head>\n\
-                            <title>{0}: {1}</title>\n\
-                        </head>\n\
-                        <body>\n".replace("{0}", course.name).replace("{1}", course.title);
-            if (!course.newCourse) {
-                // The course is a course. Build a course page.
-                htmlText += "<header><h1>EXISTING COURSE</h1></header>";
-                htmlText += "<div>\n\
-                             <h5></h5>\n\
-                             <p>Environmental Studies 239</p>\n\
-                             </div>";
-            }
-            else {
-                // The course is a proposal. Build a proposal page.
-                htmlText += "<header><h1>NEW COURSE PROPOSAL</h1></header>";
-                htmlText += "<div class=\"field\">\n\
-                             <h5 class=\"field-header\"></h5>\n\
-                             <p class=\"field-content\"></p>\n\
-                             </div>";
-            }
-            htmlText += "</html>"
+        $scope.getPrinterFriendlyPage = function(course) {
+            console.log(course);
+            var d = new Date(course.date);
+            var docDefinition = {
+              content : [
+                  {text: "COURSE PROPOSAL", style: "header"},
+                  {
+                      columns: [
+                          [
+                              {text: "COURSE IDENTIFIER", style: "subheader"},
+                              {text: course.newCourse.name, style: "body"},
+                              {text: "TITLE", style: "subheader"},
+                              {text: course.newCourse.title, style: "body"},
+                              {text: "Division", style: "subheader"},
+                              {text: course.newCourse.division, style: "body"},
+                              {text: "Instructors", style: "subheader"},
+                              {ul: course.instructors, style: "body"},
+                              {text: "General Education Categories", style: "subheader"},
+                              {ul: course.newCourse.gen_ed, style: "body"}
+                          ],
+                          [
+                              {text: "Credit Hours", style: "subheader"},
+                              {text: course.newCourse.credit_hrs, style: "body"},
+                              {text: "ESTIMATED ENROLLMENT", style: "subheader"},
+                              {text: course.est_enrollment, style: "body"},
+                              {text: "MAXIMUM CAPACITY", style: "subheader"},
+                              {text: course.newCourse.capacity, style: "body"},
+                              {text: "Terms", style: "subheader"},
+                              {ul: course.terms, style: "body"},
+                              {text: "PREREQUISITES", style: "subheader"},
+                              {text: course.newCourse.pre_req, style: "body"},
+                              {text: "FEES", style: "subheader"},
+                              {text: course.fees, style: "body"}
+                          ]
+                      ]
+                  },
+                  {text: "CATALOG DESCRIPTION", style: "subheader"},
+                  {text: course.newCourse.desc, style: "body"},
+                  {text: "Rationale", style: "subheader"},
+                  {text: course.rationale, style: "body"},
+                  {
+                      columns : [
+                          [
+                              {text: "STAFFING IMPLICATIONS", style: "subheader"},
+                              {text: course.staffing, style: "body"}
+                          ],
+                          [
+                              {text: "IMPACT ON OTHER DEPARTMENTS", style: "subheader"},
+                              {text: course.impact, style: "body"}
+                          ]
+                      ]
+                  },
+                  {text: "Last Revised", style: "subheader"},
+                  {text: d.toDateString(), style: "body"},
+                  {text: "Stage", style: "subheader"},
+                  {text: course.stage, style: "body"}
+              ],
+              styles: {
+                  header: {
+                      fontSize: 28,
+                      bold: true
+                  },
+                  subheader: {
+                      margin: [0, 10, 0, 0],
+                      fontSize: 10,
+                      bold: true
+                  },
+                  body: {
+                      fontSize: 10
+                  }
+              }
+            };
+            pdfMake.createPdf(docDefinition).open();
         };
 }
 
