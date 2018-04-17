@@ -76,10 +76,31 @@ function courseCtrl($rootScope, $scope, $filter, $log, $routeParams, $location, 
         // workflow.
         $scope.getPrinterFriendlyPage = function(course) {
             console.log(course);
+            // Set proposal type
+            var status = "";
+            if (course.action === "DEL") status = "DELETE";
+            else if (course.oldCourse) status = "MODIFIED";
+            else status = "NEW";
+            // Reformat some variables so they  look nicer.
             var d = new Date(course.date);
+            var approvalString = "";
+            switch(course.stage) {
+                case 4:
+                    approvalString = "\nRegistrar: APPROVED" + approvalString;
+                case 3:
+                    approvalString = "\nFull Faculty: APPROVED" + approvalString;
+                case 2:
+                    approvalString = "\nAPC: APPROVED" + approvalString;
+                case 1:
+                    approvalString = "Division: APPROVED" + approvalString;
+                    break;
+                default:
+                    approvalString = "No approvals yet."
+            }
+            // Define the PDF format and content
             var docDefinition = {
               content : [
-                  {text: "COURSE PROPOSAL", style: "header"},
+                  {text: status + " COURSE PROPOSAL", style: "header"},
                   {
                       columns: [
                           [
@@ -129,7 +150,7 @@ function courseCtrl($rootScope, $scope, $filter, $log, $routeParams, $location, 
                   {text: "Last Revised", style: "subheader"},
                   {text: d.toDateString(), style: "body"},
                   {text: "Stage", style: "subheader"},
-                  {text: course.stage, style: "body"}
+                  {text: approvalString, style: "body"}
               ],
               styles: {
                   header: {
