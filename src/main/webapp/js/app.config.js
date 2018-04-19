@@ -13,6 +13,10 @@ app.config(['$routeProvider', function($routeProvider){
 			params : resolveProposalParams
 		}
 	})
+        .when("/dashboard/help", {
+            templateUrl : "templates/help.html",
+            controller : "helpCtrl"
+        })
 	.when("/dashboard/mychanges",{
 		templateUrl : "templates/changes.html",
 		controller : "changeCtrl",
