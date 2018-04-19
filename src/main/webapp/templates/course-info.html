@@ -28,6 +28,7 @@
                         <div class="container">
                             <a type="button" class="btn btn-primary pull-right" style="margin-right:10px;" ng-if="course.owner == user.name" ng-href="#/{{course.newCourse.name}}/{{course.newCourse.title|qescape}}/edit"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
                             <a type="button" class="btn btn-danger pull-right" style="margin-right:10px;" ng-if="course.owner == user.name && !(user.role.length == 1 && user.role.indexOf('Registrars_Office') != -1)" data-toggle="modal" data-target="#remove-prop-modal-{{course.newCourse.name}}"><span class="glyphicon glyphicon-trash"></span> Delete Proposal</a>
+                            <a type="button" class="btn btn-info pull-right" style="margin-right:10px;" ng-click="getPrinterFriendlyPage(course)"><span class="glyphicon glyphicon-print"></span> Print</a>
                         </div>
                         <!-- <a type="button" class="approveReject" ng-if="course.owner == user.name" ng-href="#/{{course.newCourse.name}}/{{course.newCourse.title|qescape}}/edit"><div class="btn btn-primary pull-right"><span class="glyphicon glyphicon-pencil"></span> Edit</div></a>
                         <a type="button" data-toggle="modal" data-target="#remove-prop-modal-{{course.newCourse.name}}" class="btn btn-primary pull-right" ng-if="user.name == course.owner && !(user.role.length == 1 && user.role.indexOf('Registrars_Office') != -1)"><span class="glyphicon glyphicon-trash"></span></a> -->
