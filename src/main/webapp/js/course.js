@@ -83,9 +83,12 @@ function courseCtrl($rootScope, $scope, $filter, $log, $routeParams, $location, 
         // current course. This will help the registrar maintain a paper-based
         // workflow.
         $scope.getPrinterFriendlyPage = function(course) {
-            var scrubNull = function(item) {
-                if (item === null) return "";
-                if (item === undefined) return "";
+            // This function scrubs a null or underfined value and replaces it
+            // with newItem, which defaults to an empty string.
+            var scrubNull = function(item, newItem) {
+                newItem = (typeof newItem !== 'undefined') ?  newItem : "";
+                if (item === null) return newItem;
+                if (item === undefined) return newItem;
                 return item;
             };
             console.log(course);
@@ -99,7 +102,7 @@ function courseCtrl($rootScope, $scope, $filter, $log, $routeParams, $location, 
             else {
                 if (course.oldCourse) status = "MODIFIED";
                 else status = "NEW";
-                instructors = {ul: course.instructors, style: "body"};
+                instructors = {ul: scrubNull(course.instructors, []), style: "body"};
             }
             // Reformat some variables so they  look nicer.
             var d = new Date(course.date);
@@ -133,17 +136,17 @@ function courseCtrl($rootScope, $scope, $filter, $log, $routeParams, $location, 
                               {text: "Instructors", style: "subheader"},
                               instructors,
                               {text: "General Education Categories", style: "subheader"},
-                              {ul: course.newCourse.gen_ed, style: "body"}
+                              {ul: scrubNull(course.newCourse.gen_ed, []), style: "body"}
                           ],
                           [
                               {text: "Credit Hours", style: "subheader"},
                               {text: scrubNull(course.newCourse.credit_hrs), style: "body"},
                               {text: "ESTIMATED ENROLLMENT", style: "subheader"},
-                              {text: course.est_enrollment, style: "body"},
+                              {text: scrubNull(course.est_enrollment), style: "body"},
                               {text: "MAXIMUM CAPACITY", style: "subheader"},
                               {text: scrubNull(course.newCourse.capacity), style: "body"},
                               {text: "Terms", style: "subheader"},
-                              {ul: course.terms, style: "body"},
+                              {ul: scrubNull(course.terms, []), style: "body"},
                               {text: "PREREQUISITES", style: "subheader"},
                               {text: scrubNull(course.newCourse.pre_req), style: "body"},
                               {text: "FEES", style: "subheader"},
@@ -168,9 +171,9 @@ function courseCtrl($rootScope, $scope, $filter, $log, $routeParams, $location, 
                       ]
                   },
                   {text: "Last Revised", style: "subheader"},
-                  {text: d.toDateString(), style: "body"},
+                  {text: scrubNull(d.toDateString()), style: "body"},
                   {text: "Stage", style: "subheader"},
-                  {text: approvalString, style: "body"}
+                  {text: scrubNull(approvalString), style: "body"}
               ],
               styles: {
                   header: {
