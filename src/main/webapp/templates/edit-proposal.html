@@ -47,6 +47,17 @@
             </div>
         </div>
     </div>
+    <div class="form-group" title="Add attachments relevant to this course.">
+        <label class="col-xs-2">Attachments</label>
+        <div class="select-btn-combo col-xs-6">
+            <input id="apc-file-upload" class="form-control" type="file">
+            <div class="btn btn-primary" ng-click="addFile()">Add</div>
+        </div>
+        <div class="col-xs-4">
+            <div class="col-xs-6 btn-removable" ng-repeat="file in proposal.files">{{file.name}}<div class="pull-right" aria-hidden="true" ng-click="removeFile(file)">&times;</div>
+            </div>
+        </div>
+    </div>
     <div class="form-group">
         <label class="col-xs-2">Credit Hours<span style="color:red;">*</span></label>
         <div class="col-xs-2">

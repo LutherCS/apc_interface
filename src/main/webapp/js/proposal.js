@@ -39,6 +39,7 @@ function proposalCtrl($rootScope, $scope, $log, $location, $routeParams, $filter
 								"fees": "",
 								"est_enrollment": 0,
 								"instructors": [],
+                                                                "files": [],
 								"comments":  []
 							  };
 
@@ -149,6 +150,34 @@ function proposalCtrl($rootScope, $scope, $log, $location, $routeParams, $filter
 	$scope.returnToPrev = function() {
 		$window.history.back();
 	}
+        
+        // A function added to resolve issue 3 where users can upload attachments.
+        // This function will add a file to the list of files contained in a proposal.
+        $scope.addFile = function() {
+            var f = document.getElementById('apc-file-upload').files[0];
+            var reader = new FileReader();
+            
+            var fileName = f.name;
+            var fileMime = f.type;
+            if (!$scope.proposal.files) $scope.proposal.files = [];
+            
+            reader.onloadend = function(file) {
+                var fileBuffer = file.target.result;
+                //var fileDataView = new DataView(fileBuffer);
+                //var fileData = new Blob([fileDataView], {"type": fileMime})
+                $scope.proposal.files.push({"name": fileName, "type": fileMime, "data": fileBuffer});
+                $scope.$apply();
+            }
+            
+            reader.readAsDataURL(f);
+            //reader.readAsArrayBuffer(f);
+        }
+        
+        // Likewise, this function will remove a file from the list of files 
+        // contained in a proposal.
+        $scope.removeFile = function(file) {
+            $scope.proposal.files.splice($scope.proposal.files.indexOf(file),1);
+        }
 }
 
 app.filter("facultyFilter", ["$filter", function($filter){

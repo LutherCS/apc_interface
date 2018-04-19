@@ -83,10 +83,18 @@ app.config(['$routeProvider', function($routeProvider){
 	.otherwise({ redirectTo : "/"});
 }]);
 
+app.config(['$compileProvider',
+    function( $compileProvider )
+    {   
+        $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|data):/);
+    }
+]);
+
 resolveProposalParams.$inject=["dataSrv", "$q", "$rootScope"];
 function resolveProposalParams(dataSrv, $q, $rootScope) {
 	return $q.all([dataSrv.getDepts(), dataSrv.getUsers()]).then(function(data) {
 		return { depts : data[0],
 				 faculty : data[1]}
 	});
+
 }

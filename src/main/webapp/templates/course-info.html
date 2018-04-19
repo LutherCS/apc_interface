@@ -168,6 +168,13 @@
                 <div class="panel-heading">{{displayListData(course.terms)}}</div>
             </div>
         </div>
+        
+        <div class="courseInfo" ng-if="course.files">
+            <div class="panel-heading"><strong>Attachments</strong></div>
+            <div class="panel panel-default">
+                <div class="panel-heading" ng-repeat="file in course.files"><a ng-href="{{file.data}}" target="_blank"><span class="glyphicon glyphicon-file"></span> {{file.name}}</a><a style="float:right" ng-href="{{file.data}}" download="{{file.name}}"><span class="glyphicon glyphicon-download-alt"></span></a></div>
+            </div>
+        </div>
 
     </div>
     <div class="courseForum">
