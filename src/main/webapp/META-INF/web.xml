@@ -62,6 +62,9 @@
     </welcome-file-list>
     
     <session-config>
-        <session-timeout>60</session-timeout>
+        <session-timeout>43200</session-timeout>
+        <cookie-config>
+            <max-age>2592000</max-age>
+        </cookie-config>
     </session-config>
 </web-app>
