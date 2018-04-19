@@ -70,6 +70,118 @@ function courseCtrl($rootScope, $scope, $filter, $log, $routeParams, $location, 
 			return 'progress-bar-danger';
 		}
 	};
+        
+        // (Issue 39) This function builds a printer-friendly HTML page for the
+        // current course. This will help the registrar maintain a paper-based
+        // workflow.
+        $scope.getPrinterFriendlyPage = function(course) {
+            var scrubNull = function(item) {
+                if (item === null) return "";
+                if (item === undefined) return "";
+                return item;
+            };
+            console.log(course);
+            // Set proposal type
+            var status = "";
+            var instructors, est_enrollment;
+            if (course.action === "DEL") {
+                status = "DELETE";
+                instructors = {text: "N/A", style: "body"};
+            }
+            else {
+                if (course.oldCourse) status = "MODIFIED";
+                else status = "NEW";
+                instructors = {ul: course.instructors, style: "body"};
+            }
+            // Reformat some variables so they  look nicer.
+            var d = new Date(course.date);
+            var approvalString = "";
+            switch(course.stage) {
+                case 4:
+                    approvalString = "\nRegistrar: APPROVED" + approvalString;
+                case 3:
+                    approvalString = "\nFull Faculty: APPROVED" + approvalString;
+                case 2:
+                    approvalString = "\nAPC: APPROVED" + approvalString;
+                case 1:
+                    approvalString = "Division: APPROVED" + approvalString;
+                    break;
+                default:
+                    approvalString = "No approvals yet."
+            }
+            var docDefinition;
+            docDefinition = {
+              content : [
+                  {text: status + " COURSE PROPOSAL", style: "header"},
+                  {
+                      columns: [
+                          [
+                              {text: "COURSE IDENTIFIER", style: "subheader"},
+                              {text: scrubNull(course.newCourse.name), style: "body"},
+                              {text: "TITLE", style: "subheader"},
+                              {text: scrubNull(course.newCourse.title), style: "body"},
+                              {text: "Division", style: "subheader"},
+                              {text: scrubNull(course.newCourse.division), style: "body"},
+                              {text: "Instructors", style: "subheader"},
+                              instructors,
+                              {text: "General Education Categories", style: "subheader"},
+                              {ul: course.newCourse.gen_ed, style: "body"}
+                          ],
+                          [
+                              {text: "Credit Hours", style: "subheader"},
+                              {text: scrubNull(course.newCourse.credit_hrs), style: "body"},
+                              {text: "ESTIMATED ENROLLMENT", style: "subheader"},
+                              {text: course.est_enrollment, style: "body"},
+                              {text: "MAXIMUM CAPACITY", style: "subheader"},
+                              {text: scrubNull(course.newCourse.capacity), style: "body"},
+                              {text: "Terms", style: "subheader"},
+                              {ul: course.terms, style: "body"},
+                              {text: "PREREQUISITES", style: "subheader"},
+                              {text: scrubNull(course.newCourse.pre_req), style: "body"},
+                              {text: "FEES", style: "subheader"},
+                              {text: scrubNull(course.fees), style: "body"}
+                          ]
+                      ]
+                  },
+                  {text: "CATALOG DESCRIPTION", style: "subheader"},
+                  {text: scrubNull(course.newCourse.desc), style: "body"},
+                  {text: "Rationale", style: "subheader"},
+                  {text: scrubNull(course.rationale), style: "body"},
+                  {
+                      columns : [
+                          [
+                              {text: "STAFFING IMPLICATIONS", style: "subheader"},
+                              {text: scrubNull(course.staffing), style: "body"}
+                          ],
+                          [
+                              {text: "IMPACT ON OTHER DEPARTMENTS", style: "subheader"},
+                              {text: scrubNull(course.impact), style: "body"}
+                          ]
+                      ]
+                  },
+                  {text: "Last Revised", style: "subheader"},
+                  {text: d.toDateString(), style: "body"},
+                  {text: "Stage", style: "subheader"},
+                  {text: approvalString, style: "body"}
+              ],
+              styles: {
+                  header: {
+                      fontSize: 28,
+                      bold: true
+                  },
+                  subheader: {
+                      margin: [0, 10, 0, 0],
+                      fontSize: 10,
+                      bold: true
+                  },
+                  body: {
+                      fontSize: 10
+                  }
+              }
+            };
+            console.log(docDefinition)
+            pdfMake.createPdf(docDefinition).open();
+        };
 }
 
 app.factory("courseSrv", ["$rootScope", "$location", "userSrv", "dataSrv", "EVENTS", function($rootScope, $location, userSrv, dataSrv, EVENTS){
