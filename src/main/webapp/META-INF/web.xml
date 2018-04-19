@@ -32,6 +32,7 @@
             <role-name>apc_development</role-name>
             <role-name>Faculty</role-name>
             <role-name>Registrars_Office</role-name>
+            <role-name>apc_staff</role-name>
         </auth-constraint>
     </security-constraint>
     
@@ -43,6 +44,9 @@
     </security-role>
     <security-role>
             <role-name>Registrars_Office</role-name>
+    </security-role>
+    <security-role>
+            <role-name>apc_staff</role-name>
     </security-role>
     
     <login-config>
