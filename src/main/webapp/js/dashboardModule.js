@@ -15,7 +15,8 @@ app.constant("filterList",
 	  { idx : 1, name : "Title/Name"},
 	  { idx : 2, name : "Department"},
 	  { idx : 3, name : "Division"}, 
-	  { idx : 4, name : "Owner"}
+	  { idx : 4, name : "Owner"},
+          { idx : 5, name : "Status"}
 	]
 );
 
@@ -31,7 +32,8 @@ app.controller("courseListCtrl", ["$scope", "$rootScope", "$log", "$filter", "fi
 					  	{ idx : 1, name : "Department"},
 					  	{ idx : 2, name : "Division"},
 					  	{ idx : 3, name : "Date"},
-					  	{ idx : 4, name : "Owner"}
+					  	{ idx : 4, name : "Owner"},
+                                                { idx : 5, name : "Status"}
 						];
 
 	$scope.queries = { "filter" : null, 
@@ -82,7 +84,7 @@ app.controller("courseListCtrl", ["$scope", "$rootScope", "$log", "$filter", "fi
 		var filter = $scope.queries.filter;
 		switch ($scope.currFilter.idx) {
 			case 0:
-				return $filter('searchProposal')(elems, filter, ["owner"], ["title","name","dept","division"]);
+				return $filter('searchProposal')(elems, filter, ["owner", "action"], ["title","name","dept","division"]);
 			case 1:
 				return $filter('searchProposal')(elems, filter, [], ["title", "name"]);
 			case 2:
@@ -91,6 +93,8 @@ app.controller("courseListCtrl", ["$scope", "$rootScope", "$log", "$filter", "fi
 				return $filter('searchProposal')(elems, filter, [], ["division"]);
 			case 4:
 				return $filter('searchProposal')(elems, filter, ["owner"], []);
+                        case 5:
+				return $filter('searchProposal')(elems, filter, ["action"], []);
 			default:
 				return elems;
 		}
@@ -108,7 +112,9 @@ app.controller("courseListCtrl", ["$scope", "$rootScope", "$log", "$filter", "fi
 				return elem.date;
 			case 4:
 				return elem.owner;
-			default:
+                        case 5:
+                                return elem.action;
+                        default:
 				if (elem.newCourse)
 					return elem.newCourse.name;
 				else return elem.name;
