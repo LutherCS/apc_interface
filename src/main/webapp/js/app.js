@@ -52,6 +52,7 @@ function mainCtrl($rootScope, $scope, $log, $location, $q, $filter, authSrv, dat
      
     initData();
     
+    // This function is where all of the course data for the entire application is loaded.
     function initData() { 
         return $q.all([dataSrv.getProposals(), dataSrv.getCourses(), dataSrv.getDepts()]).then(function(data){
             $scope.allProposals.elements = data[0];

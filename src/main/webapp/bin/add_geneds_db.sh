@@ -5,8 +5,5 @@
 # sudo service mongod start
 
 #	Load data included in mock_data.js into table apcdata
-echo "[info] Creating new mongoDB database from database/mock_data.js..."
-mongo apcdata ./dropAllCollections.js
-mongoimport --db apcdata --collection courses --type json --file ./courseData.json --jsonArray
+echo "[info] Adding geneds collection to db from file genEdData.json."
 mongoimport --db apcdata --collection geneds  --type json --file ./genEdData.json  --jsonArray
-mongo apcdata ./init_data.js

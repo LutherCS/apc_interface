@@ -76,8 +76,14 @@ function proposalCtrl($rootScope, $scope, $log, $location, $routeParams, $filter
 												    "desc": course.desc,
 
 									};
-				if (course.gen_ed) {
-				 	$scope.proposal.newCourse["gen_ed"] = course.gen_ed.slice();
+                                // ISSUE 21 (Gen eds do not properly populate the edit form): 
+                                // Though the gen_ed property of newCourse contains its gen eds,
+                                // the course object holds its gen eds in the gen_eds property. This is a
+                                // subtle but important difference. Furthermore, gen_eds is a comma
+                                // separated string, but our template edit-proposal.js requires an array
+                                // of strings. So we split gen_eds along the commas. This solves issue 21.
+				if (course.gen_eds) {
+				 	$scope.proposal.newCourse["gen_ed"] = course.gen_eds.split(",");
 				} else {
 					$scope.proposal.newCourse["gen_ed"] = [];
 				}
@@ -86,6 +92,9 @@ function proposalCtrl($rootScope, $scope, $log, $location, $routeParams, $filter
 				//if it is already a proposal, set scope.proposal
 				$scope.proposal = course;
 			}
+                        // ISSUE 1 (Upon editing a music proposal, the department changes to museum studies):
+                        // To make sure we don't return both Museum Studies and Music at the same time, we simply
+                        // make sure the last argument we pass to filter is "true", as in the following line.
 			$scope.selectedDept = $filter("filter")($scope.depts, { abbrev : $scope.proposal.newCourse.dept}, true)[0];
 			$scope.courseNum = $scope.proposal.newCourse.name.split("-")[1];
 		}
