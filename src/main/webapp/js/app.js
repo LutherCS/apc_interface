@@ -53,14 +53,20 @@ function mainCtrl($rootScope, $scope, $log, $location, $q, $filter, authSrv, dat
     initData();
     
     // This function is where all of the course data for the entire application is loaded.
+    // ISSUE 29 (Database-driven gen eds): Here we simply add a call dataSrv.getGenEds()
+    // to the query in order to get all the gen eds from the database as defined
+    // in dataSrv. Then we set $scope.allGenEds = data[3] in order to save the gen
+    // eds in the scope.
+    // Also see proposal.js.
     function initData() { 
-        return $q.all([dataSrv.getProposals(), dataSrv.getCourses(), dataSrv.getDepts()]).then(function(data){
+        return $q.all([dataSrv.getProposals(), dataSrv.getCourses(), dataSrv.getDepts(), dataSrv.getGenEds()]).then(function(data){
             $scope.allProposals.elements = data[0];
             $scope.registrarData.elements = data[0].filter(pastAllStages);
             $log.debug($scope.registrarData);
             $log.debug($scope.user);
             $scope.courses = data[1];
             $scope.depts = data[2];
+            $scope.allGenEds = data[3];
             $scope.retrievingData = false;
         });
     }

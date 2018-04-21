@@ -40,7 +40,11 @@ public class ApcDao {
         COLLECTION_USERS("users"),
         COLLECTION_PROPOSALS("proposals"),
         COLLECTION_DEPTS("depts"),
-        COLLECTION_ARCHIVES("archives");
+        COLLECTION_ARCHIVES("archives"),
+        // ISSUE 29 (Database-driven gen eds): Add this key to the enum so we can
+        // refer to the collection in ApcController.java.
+        // Also see proposal.js.
+        COLLECTION_GENEDS("geneds");
         
         private String name;
         

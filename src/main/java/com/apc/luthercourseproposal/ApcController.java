@@ -227,6 +227,23 @@ public class ApcController extends HttpServlet {
                         status = STATUS_BAD_REQUEST;
                     }
                     break;
+                // ISSUE 29 (Database-driven gen eds): Add this case to the
+                // controller in order to properly service API requests for
+                // gen ed requirements. Makes a call to getAll, which works
+                // regardless of the collection passed to it. If response is OK,
+                // return the response. Otherwise return an empty response and
+                // say the request is bad. This is approximately identical to
+                // the other cases, such as departments.
+                // Also see proposal.js.
+                case "geneds":
+                    try {
+                        resp = this.dao.getAll(Collections.COLLECTION_GENEDS);
+                        status = STATUS_OK;
+                    } catch (Exception ex){
+                        resp = "";
+                        status = STATUS_BAD_REQUEST;
+                    }
+                    break;
                 case "archiveSearch":
                     try {
                         String searchString = request.getParameter("s");
