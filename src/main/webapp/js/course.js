@@ -27,6 +27,7 @@ function courseCtrl($rootScope, $scope, $filter, $log, $routeParams, $location, 
                     $log.debug($scope.user);
                     $scope.courses = data[1];
                     $scope.depts = data[2];
+                    $scope.allGenEds = data[3];
                     $scope.retrievingData = false;
                 });
             }
