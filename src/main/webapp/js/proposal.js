@@ -84,6 +84,7 @@ function proposalCtrl($rootScope, $scope, $log, $location, $routeParams, $filter
 
 		if (!courseName) {
 			$scope.proposal["newCourse"] = newCourse;
+                        $scope.proposal.action = "NEW";
 		} else {
 			//load data
 			var course = userSrv.addToRecentlyViewed(courseName, courseTitle, $scope.courses, $scope.allProposals);
@@ -103,6 +104,7 @@ function proposalCtrl($rootScope, $scope, $log, $location, $routeParams, $filter
 												    "desc": course.desc,
 
 									};
+                                $scope.proposal.action = "MOD";
                                 // ISSUE 21 (Gen eds do not properly populate the edit form): 
                                 // Though the gen_ed property of newCourse contains its gen eds,
                                 // the course object holds its gen eds in the gen_eds property. This is a
