@@ -71,7 +71,7 @@ app.config(['$routeProvider', function($routeProvider){
 	})
 	.when("/:course/:courseTitle", {
 		templateUrl : "templates/course-info.html",
-        controller : "courseCtrl",
+                controller : "courseCtrl"
 	})
 	.when("/:course/:courseTitle/edit", {
 		templateUrl : "templates/edit-proposal.html",

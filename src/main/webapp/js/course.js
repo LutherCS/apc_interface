@@ -6,11 +6,33 @@ app.directive("removePropPopup", removePropPopup);
 app.directive("markCourseRemovalPopup", markCourseRemovalPopup);
 app.directive("courseInfo", courseInfo);
 
-courseCtrl.$inject=["$rootScope", "$scope", "$filter", "$log", "$routeParams", "$location", "userSrv", "courseSrv", "archiveSrv", "dataSrv"];
-function courseCtrl($rootScope, $scope, $filter, $log, $routeParams, $location, userSrv, courseSrv, archiveSrv, dataSrv) {
+courseCtrl.$inject=["$rootScope", "$scope", "$filter", "$log", "$routeParams", "$location", "userSrv", "courseSrv", "archiveSrv", "dataSrv", "$q"];
+function courseCtrl($rootScope, $scope, $filter, $log, $routeParams, $location, userSrv, courseSrv, archiveSrv, dataSrv, $q) {
 	var courseName;
         var courseTitle;
 
+        // ISSUE 11: Link sharing does not work. This may be as simple as making
+        // sure the course are loaded every time the view is opened.
+        if (!$scope.courses) {
+            console.debug("AH!!! WHERE HAVE ALL THE COURSES GONE!?!");
+            initData();
+            function pastAllStages(proposal) {
+                return proposal.stage == 4;
+            }
+            function initData() { 
+                return $q.all([dataSrv.getProposals(), dataSrv.getCourses(), dataSrv.getDepts()]).then(function(data){
+                    $scope.allProposals.elements = data[0];
+                    $scope.registrarData.elements = data[0].filter(pastAllStages);
+                    $log.debug($scope.registrarData);
+                    $log.debug($scope.user);
+                    $scope.courses = data[1];
+                    $scope.depts = data[2];
+                    $scope.retrievingData = false;
+                });
+            }
+        }
+        
+        $scope.$watch(function(){
 	//if we are viewing a course, add it to recently viewed.
 	if (!$scope.course) {
 //		if (!$routeParams || !$routeParams.course || !$routeParams.courseTitle) {
@@ -24,6 +46,7 @@ function courseCtrl($rootScope, $scope, $filter, $log, $routeParams, $location, 
 		//}
 		$scope.course = userSrv.addToRecentlyViewed(courseName, courseTitle, $scope.courses, $scope.allProposals);
 	}
+        });
 
 	$scope.canApprove = userSrv.canApprove;
 
